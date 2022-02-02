@@ -25,6 +25,8 @@ async def register(request: Request):
 
 @app.post("/register")
 async def register(username: str = Form(...), password: str = Form(...), db=Depends(get_db)):
+    if get_user(db, username):
+        raise HTTPException(status_code=404, detail="user has registered!")
     create_user(db, username, password)
     return RedirectResponse("/", status_code=status.HTTP_302_FOUND)
 
