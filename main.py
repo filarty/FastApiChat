@@ -24,7 +24,7 @@ async def register(request: Request):
 
 
 @app.post("/register")
-async def register(username: str = Form(...), password: str = Form(...), db=Depends(get_db)):
+async def register(username: str = Form(...), password: str = Form(..., min_length=6), db=Depends(get_db)):
     if get_user(db, username):
         raise HTTPException(status_code=404, detail="user has registered!")
     create_user(db, username, password)
@@ -43,7 +43,5 @@ async def login_check(username: str = Form(...), password: str = Form(...), db=D
     if db_user is None:
         raise HTTPException(status_code=404, detail="user not registered!")
     if not Password.check_pass(check_pass, db_user.password):
-        print(db_user.password)
-        print(check_pass.encode())
         raise HTTPException(status_code=404, detail="wrong password!")
     return JSONResponse({"name": username, "pass": check_pass})
