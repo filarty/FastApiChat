@@ -4,6 +4,7 @@ from fastapi.templating import Jinja2Templates
 from valid_for_pass import Password
 from sql_app.crud import get_user, create_user
 from sql_app.database import engine, SessionLocal, Base
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
