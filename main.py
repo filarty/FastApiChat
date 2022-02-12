@@ -10,6 +10,17 @@ app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 Base.metadata.create_all(bind=engine)
 
+origins = [
+    "*",
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 def get_db():
     db = SessionLocal()
@@ -28,8 +39,10 @@ async def register(request: Request):
 async def register(username: str = Form(...), password: str = Form(..., min_length=6), db=Depends(get_db)):
     if get_user(db, username):
         raise HTTPException(status_code=404, detail="user has registered!")
-    create_user(db, username, password)
-    return RedirectResponse("/", status_code=status.HTTP_302_FOUND)
+    if Password.valid_pass(password):
+        create_user(db, username, password)
+        return RedirectResponse("/", status_code=status.HTTP_302_FOUND)
+    return JSONResponse({"password": "not valid"})
 
 
 @app.get("/", response_class=HTMLResponse)

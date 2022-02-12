@@ -4,8 +4,6 @@ body {
   width: 100%;
 }
 
-body.text-center {}
-
 body {
   display: flex;
   padding-top: 40px;
@@ -15,6 +13,7 @@ body {
   background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
+  -webkit-text-size-adjust: 100%;
 }
 
 @keyframes gradient {
@@ -35,6 +34,10 @@ body {
   padding: 15px;
   margin: auto;
 }
+*, ::after, ::before {
+box-sizing: border-box;
+}
+
 .form-signin .checkbox {
   font-weight: 400;
 }
