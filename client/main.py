@@ -28,4 +28,4 @@ def send_register_form(login: str, password: str):
         return {'connection': 'failed'}
 
 
-eel.start('main_page.html', size=(800, 800), position=(550, 150))
+eel.start('login.html', size=(800, 800), position=(550, 150))

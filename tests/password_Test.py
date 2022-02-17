@@ -1,5 +1,5 @@
 import unittest
-from valid_for_pass import Password
+from server.valid_for_pass import Password
 
 
 class TestPassword(unittest.TestCase):
