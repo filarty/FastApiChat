@@ -14,9 +14,17 @@ def get_user(db: Session, username: str):
     return db.query(models.User).filter(models.User.username == username).first()
 
 
+def get_users_list(db: Session):
+    return db.query(models.User.username).all()
+
+
 def create_message(db: Session, user_id: int, text: str, to: int):
     message = models.Messages(user_id=user_id, message_text=text, to_user_id=to)
     db.add(message)
     db.commit()
     db.refresh(message)
     return message
+
+
+def get_messages(db: Session, user_id: int, skip: int, limit: int):
+    return db.query(models.Messages).filter(models.Messages.user_id == user_id).offset(skip).limit(limit).all()

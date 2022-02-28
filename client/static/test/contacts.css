@@ -1,0 +1,17 @@
+ul {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.avatar {
+    border-radius: 100px;
+}
+
+.profile {
+    margin-top: 20px;
+    width: 100px;
+    text-align: center;
+    }
+
+

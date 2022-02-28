@@ -1,7 +1,11 @@
+import json
+
 import eel
 import requests
 
 eel.init('static')
+
+auth = None
 
 
 @eel.expose
@@ -26,6 +30,23 @@ def send_register_form(login: str, password: str):
         return response.json()
     except requests.exceptions.ConnectionError:
         return {'connection': 'failed'}
+
+
+@eel.expose
+def get_contacts() -> json:
+    res = requests.get("http://127.0.0.1:1000/getUsers")
+    return res.json()['users']
+
+
+@eel.expose
+def set_username(username: str):
+    global auth
+    auth = username
+
+
+@eel.expose
+def get_username():
+    return auth
 
 
 eel.start('login.html', size=(800, 800), position=(550, 150))

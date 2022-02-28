@@ -8,9 +8,10 @@ document.querySelector("#btn").onclick = () => {
         };
     if (n["connection"] == "failed") {
         document.getElementById("wrongLogin").innerHTML = "Сервер не доступен!";
-          }
-    else {
-        console.log(n);
+          };
+    if (n['login'] == "success") {
+      eel.set_username(username);
+      window.location.replace("contact_list.html");
     };
         });
      };
