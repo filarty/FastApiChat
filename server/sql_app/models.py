@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, LargeBinary, ForeignKey, TEXT
+from sqlalchemy import Column, Integer, String, LargeBinary, ForeignKey, TEXT, ARRAY
 from .database import Base
 
 
@@ -7,6 +7,7 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(50))
     password = Column(LargeBinary(length=60))
+    friends = Column(ARRAY(Integer()))
 
 
 class Messages(Base):

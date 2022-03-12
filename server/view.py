@@ -2,7 +2,8 @@ from fastapi.responses import JSONResponse, Response
 from fastapi import HTTPException
 
 from sqlalchemy.orm import Session
-from sql_app.crud import get_user, create_user, get_messages, create_message, get_users_list
+from sql_app.crud import get_user, create_user, get_messages, create_message, get_users_list, get_user_friends
+from sql_app.crud import add_user_friend
 
 from valid_for_pass import Password
 
@@ -40,3 +41,18 @@ async def new_message(db: Session, user_id: int, text: str, to: int):
 
 async def read_messages(db: Session, user_id: int, skip: int, limit: int):
     return get_messages(db=db, user_id=user_id, skip=skip, limit=limit)
+
+
+async def get_friends(db: Session, user_id: int):
+    return get_user_friends(db, user_id)
+
+
+async def add_friend(db: Session, user_id: int, friend_id: int) -> JSONResponse:
+    response = add_user_friend(db=db, user_id=user_id, friend_id=friend_id)
+    match response:
+        case list():
+            return JSONResponse({"result": response})
+        case False:
+            return JSONResponse({"result": "user have this friend"})
+
+
